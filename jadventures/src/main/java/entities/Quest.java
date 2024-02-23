@@ -1,6 +1,5 @@
 package entities;
 
-import java.lang.annotation.Inherited;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -1,18 +1,19 @@
-package dto.guild;
+package entities;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
-public abstract class GuildDtoBase 
-{
+@Builder
+public class LoginRequest {
     
-    private String name;
+    private String username;
     private String authentication_seal;
-    
+
 }

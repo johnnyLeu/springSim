@@ -6,7 +6,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class GuildDtoR extends GuildDtoBase
+public class logInDtoR extends GuildDtoBase
 {
     
 }

@@ -15,9 +15,6 @@ public class GuildConverter
                 .builder()
                 .name(dto.getName())
                 .authentication_seal(dto.getAuthentication_seal())
-                .seal_img_url(dto.getSeal_img_url())
-                .n_employees(dto.getN_employees())
-                .hq_address(dto.getHq_address())
                 .build();
     }
 
@@ -25,12 +22,12 @@ public class GuildConverter
     {
         return GuildDtoWFull
                 .builder()
+                .id(g.getId())
                 .name(g.getName())
                 .authentication_seal(g.getAuthentication_seal())
                 .seal_img_url(g.getSeal_img_url())
                 .n_employees(g.getN_employees())
                 .hq_address(g.getHq_address())
-                .id(g.getId())
                 .questions(g.getQuestions())
                 .build();
     }

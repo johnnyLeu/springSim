@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import converter.GuildConverter;
 import dto.guild.GuildDtoR;
 import dto.guild.GuildDtoWFull;
+import dto.guild.logInDtoR;
 import entities.Guild;
 import repository.GuildRepository;
 
@@ -26,18 +27,22 @@ public class GuildController
     @Autowired
     GuildConverter conv;
 
-@GetMapping("/guild")
-public List<GuildDtoWFull> getAllGuildFull() 
-    {
-        return  repo.findAll()
+@GetMapping("/guild/full")
+public List<GuildDtoWFull> getAllGuildFull() {
+    return  repo.findAll()
                 .stream()
                 .map(e -> conv.guildToDtoWFull(e))
                 .toList();
-    }
-    
-@PostMapping("/guild")
-public Guild insertGuild(@RequestBody GuildDtoR dto) 
+}
+
+@PostMapping("/patronlogin")
+public Guild logIn(@RequestBody logInDtoR LogDto)
 {
+    
+}
+
+@PostMapping("/guild")
+public Guild insertGuild(@RequestBody GuildDtoR dto) {
         Guild guild = conv.dtoRtoGuild(dto);
 
         if (isValidAuthenticationSeal(guild.getAuthentication_seal())) 
@@ -48,29 +53,40 @@ public Guild insertGuild(@RequestBody GuildDtoR dto)
     
 }
 
-private boolean isValidAuthenticationSeal(String authenticationSeal) 
-{
+private boolean isValidAuthenticationSeal(String authenticationSeal){
    
-    if (authenticationSeal == null || authenticationSeal.length() < 8) {
+    if (authenticationSeal == null || authenticationSeal.length() < 8) 
         return false;
-    }
+    
     boolean hasLowerCase = false;
     boolean hasUpperCase = false;
-    boolean hasDigit = false;
+    boolean hasNumber = false;
     boolean hasSpecialChar = false;
-    for (char c : authenticationSeal.toCharArray()) 
-    {
+
+    for (char c : authenticationSeal.toCharArray()) {
         if (Character.isLowerCase(c)) 
             hasLowerCase = true;
-        else if (Character.isUpperCase(c)) 
-            hasUpperCase = true;
-        else if (Character.isDigit(c)) 
-            hasDigit = true;
+
         else 
-            hasSpecialChar = true;
+            if (Character.isUpperCase(c)) 
+                hasUpperCase = true;
+
+        else 
+            if (Character.isDigit(c)) 
+                hasNumber = true;
+
+        else 
+            if (
+                !Character.isLowerCase(c)  && 
+                !Character.isUpperCase(c)  && 
+                !Character.isDigit(c)      && 
+                !Character.isWhitespace(c) && 
+                !Character.isAlphabetic(c) 
+            )
+                hasSpecialChar = true;
         
     }
-    return hasLowerCase && hasUpperCase && hasDigit && hasSpecialChar;
+    return hasLowerCase && hasUpperCase && hasNumber && hasSpecialChar;
 }
 
 @PutMapping ("/guild/{id}")
@@ -87,9 +103,9 @@ public Guild updateGuild(@RequestBody GuildDtoR dto, @PathVariable Integer id) {
 }
 
 @DeleteMapping("/guild/{id}")
-public void  deleteGuild(@PathVariable  @NonNull Integer id) 
-    {
-         repo.deleteById(id);
+public void  deleteGuild(@PathVariable  @NonNull Integer id) {
+        repo.deleteById(id);
     }
+
 }
  

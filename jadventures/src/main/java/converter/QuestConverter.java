@@ -14,15 +14,10 @@ public class QuestConverter
     {
         return Quest
                 .builder()
-                .date_created(dto.getDate_created())
                 .status(dto.getStatus())
                 .rank(dto.getRank())
                 .reward(dto.getReward())
-                .area(dto.getArea())
-                .date_completed(dto.getDate_completed())
-                .map_url(dto.getMap_url())
                 .description(dto.getDescription())
-                .type(dto.getType())
                 .build();
     }
 
